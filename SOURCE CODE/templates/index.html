@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload - Lesion Lens</title>
+    <meta content="Upload skin lesion images for AI-powered analysis" name="description">
+    <meta content="skin cancer detection, AI healthcare, dermatology, image upload, lesion analysis" name="keywords">
+
+    <!-- Favicons -->
+    <link href="{{ url_for('static', filename='assets/favicon.ico') }}" rel="icon">
+    <link href="{{ url_for('static', filename='assets/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <!-- AOS (Animate on Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Custom Styles (main.css) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+    <style>
+        /* ... (Styles from previous responses) ... */
+        :root {
+            --primary-color: #3498db; /* Blue */
+            --secondary-color: #2980b9; /* Darker Blue */
+            --accent-color: #e74c3c; /* Red (for warnings/melanoma) */
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --background-light: #ecf0f1;
+        }
+
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--background-light);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        .navbar {
+          background-color: white;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color);
+        }
+
+        .upload-section {
+            padding: 4rem 0;
+        }
+
+        .upload-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .upload-form input[type="file"] {
+            display: none; /* Hide the default file input */
+        }
+
+        .upload-label {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .upload-label:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .upload-label i {
+            margin-right: 0.5rem;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none; /* Initially hidden */
+        }
+
+        .upload-form .btn-primary {
+            width: 100%;
+        }
+        .upload-options {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .upload-options .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upload-options .btn i {
+            margin-right: 0.5rem;
+        }
+
+        .or-separator {
+            margin: 0 1rem;
+            font-weight: bold;
+            color: var(--text-light);
+        }
+
+        /* Camera Styles */
+        .camera-view {
+            position: relative;
+            width: 100%;
+            max-width: 500px; /* Or whatever size you want */
+            margin: 0 auto; /* Center the camera view */
+            display: none; /* Initially hidden */
+        }
+        #videoElement {
+          width: 100%;
+          height: auto;
+          border-radius: 8px;
+          display: block;
+        }
+
+        .camera-controls {
+            margin-top: 1rem;
+            text-align: center;
+        }
+         /* Footer */
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a href="{{ url_for('first') }}" class="navbar-brand d-flex align-items-center">
+                <i class="bi bi-heart-pulse-fill me-2"></i>
+                Lesion Lens
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="{{ url_for('first') }}" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url_for('index') }}" class="nav-link active">Upload</a>
+                    </li>
+                     <li class="nav-item">
+                        <a href="{{ url_for('first') }}" class="nav-link">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Upload Section -->
+    <section class="upload-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="upload-card" data-aos="fade-up">
+                        <div class="upload-icon">
+                            <i class="bi bi-cloud-arrow-up-fill"></i>
+                        </div>
+                        <h2 class="mb-4">Upload Skin Lesion Image</h2>
+
+                        <form action="/submit" method="POST" enctype="multipart/form-data" class="upload-form">
+                            <div class="upload-options">
+                                <label for="imagefile" class="upload-label btn btn-primary">
+                                    <i class="bi bi-upload"></i> Choose File
+                                </label>
+                                <span class="or-separator">or</span>
+                                <button type="button" class="btn btn-outline-primary" onclick="startCamera()">
+                                    <i class="bi bi-camera-fill"></i> Use Camera
+                                </button>
+                            </div>
+
+                            <!-- Hidden file input -->
+                            <input type="file" name="my_image" id="imagefile" accept="image/*" capture="environment"  onchange="previewImage();">
+
+                            <!-- Camera View (Initially Hidden) -->
+                            <div class="camera-view">
+                                <video id="videoElement" autoplay playsinline></video>
+                                <div class="camera-controls">
+                                     <button type="button" class="btn btn-success" onclick="takePicture()"><i class="bi bi-camera"></i> Capture</button>
+                                    <button type="button" class="btn btn-danger" onclick="stopCamera()"><i class="bi bi-x-circle"></i> Close</button>
+                                </div>
+                            </div>
+
+                            <!-- Image Preview (Initially Hidden) -->
+                            <img id="preview" class="preview-image" src="#" alt="Image Preview">
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 Lesion Lens. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <!-- AOS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+        });
+
+        let videoStream; // Store the camera stream globally
+
+        function previewImage() {
+            const fileInput = document.getElementById('imagefile');
+            const preview = document.getElementById('preview');
+            const file = fileInput.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    document.querySelector('.camera-view').style.display = 'none'; // Hide camera
+                    if (videoStream) {
+                      stopCamera(); // Stop the camera if it's active
+                    }
+
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        async function startCamera() {
+          try {
+            const fileInput = document.getElementById('imagefile');
+            // fileInput.click();  // Don't click; we're handling camera directly
+
+            const preview = document.getElementById('preview');
+            preview.style.display = 'none';
+
+            const cameraView = document.querySelector('.camera-view');
+            cameraView.style.display = 'block';
+
+            const videoElement = document.getElementById('videoElement');
+            videoStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } }); //Prioritize back camera
+            videoElement.srcObject = videoStream;
+
+          } catch (error) {
+            console.error("Error accessing camera:", error);
+            alert("Could not access the camera.  Please ensure your browser has permission to use the camera and try again.  Error: " + error.message);
+          }
+        }
+
+        function stopCamera() {
+             if (videoStream) {
+                videoStream.getTracks().forEach(track => track.stop());
+                videoStream = null; // Clear the stream
+            }
+          document.querySelector('.camera-view').style.display = 'none'; // Hide camera
+        }
+
+        function takePicture() {
+            const videoElement = document.getElementById('videoElement');
+            const canvas = document.createElement('canvas');
+            canvas.width = videoElement.videoWidth;
+            canvas.height = videoElement.videoHeight;
+            const context = canvas.getContext('2d');
+            context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+            const preview = document.getElementById('preview');
+            preview.src = canvas.toDataURL('image/jpeg'); // Convert to JPEG (better for photos)
+            preview.style.display = 'block';
+
+            // Convert the canvas image to a Blob and set it as the file input's value
+            canvas.toBlob(function(blob) {
+                const file = new File([blob], "captured_image.jpg", { type: "image/jpeg" });
+                const dataTransfer = new DataTransfer();  // Use DataTransfer
+                dataTransfer.items.add(file);
+                document.getElementById('imagefile').files = dataTransfer.files; //IMPORTANT
+
+            }, 'image/jpeg');
+
+
+            stopCamera();
+        }
+        //Close the camera if user click outside of the camera
+        document.addEventListener('click', function(event) {
+            const cameraView = document.querySelector('.camera-view');
+            const useCameraButton = document.querySelector('.upload-options .btn-outline-primary');
+
+            // Check if the click target is outside the camera view and not the "Use Camera" button
+            if (!cameraView.contains(event.target) && !useCameraButton.contains(event.target)) {
+                stopCamera();
+            }
+        });
+    </script>
+</body>
+</html>
