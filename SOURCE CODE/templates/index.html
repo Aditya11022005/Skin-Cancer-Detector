@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload - Lesion Lens</title>
+    <meta content="Upload skin lesion images for AI-powered analysis" name="description">
+    <meta content="skin cancer detection, AI healthcare, dermatology, melanoma detection, upload image, camera capture" name="keywords">
+
+    <!-- Favicons (Using online placeholders) -->
+    <link href="https://via.placeholder.com/50x50/000000/FFFFFF?text=Icon" rel="icon">
+    <link href="https://via.placeholder.com/150x150/000000/FFFFFF?text=Icon" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <!-- AOS (Animate on Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+      body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            background-color: #f8f9fa;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+       .navbar-brand {
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: #0d6efd;
+        }
+
+        .navbar-brand i {
+            color: #dc3545;
+        }
+
+        .nav-link {
+            color: #444;
+            font-weight: 500;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #0d6efd;
+        }
+
+        .main {
+            flex-grow: 1;
+            padding: 2rem 0;
+        }
+
+        .page-title {
+            background-size: cover;
+            background-position: center;
+            padding: 4rem 0;
+            color: #fff;
+            text-align: center;
+            position: relative;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            /*  Added a semi-transparent overlay */
+              &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
+                border-radius: inherit; /* Important: Inherit border-radius */
+                z-index: 1;
+              }
+
+             /* Ensure text is above the overlay */
+            & > .container {
+              position: relative;
+              z-index: 2;
+            }
+
+        }
+
+        .page-title h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+
+        }
+        .breadcrumbs {
+          color: #fff;
+        }
+        .breadcrumbs a{
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .upload-card {
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+
+        }
+        .upload-card:hover{
+              transform: translateY(-5px);
+        }
+        .upload-icon {
+            font-size: 3rem;
+            color: #0d6efd;
+            margin-bottom: 1rem;
+        }
+
+        .upload-form label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+            color: #495057;
+        }
+        .upload-form .form-control {
+            border-radius: 10px;
+            padding: 0.8rem 1.2rem;
+            border: 2px solid #ced4da;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            /*  Added to make the file input full-width */
+            width: 100%;
+        }
+        .upload-form .form-control:focus {
+            border-color: #0d6efd;
+            outline: 0;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        /* Preview Image */
+       #preview {
+            max-width: 100%;
+            max-height: 300px;
+            margin-top: 1rem;
+            border-radius: 10px;
+            display: none; /* Initially hidden */
+        }
+
+        /* Camera Capture Button */
+        .btn-capture {
+            background-color: #28a745; /* Bootstrap success color */
+            border-color: #28a745;
+            color: #fff;
+            border-radius: 10px;
+            padding: 0.8rem 1.5rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%; /* Full width */
+        }
+
+        .btn-capture:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+            transform: translateY(-2px);
+        }
+        .btn-submit{
+              background-color: #0d6efd;
+              border-color: #0d6efd;
+              border-radius: 10px; /* Rounded button */
+              padding: 0.8rem 1.5rem;
+              font-weight: 600;
+              width: 100%;
+              transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+        }
+
+        .btn-submit:hover {
+            background-color: #0b5ed7;
+            border-color: #0a58ca;
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+
+        /* Video Element (for camera) */
+        #video {
+            width: 100%;
+            max-width: 500px;  /* Limit size */
+            border-radius: 10px;
+            display: none; /* Initially hidden */
+             margin-top: 1rem;
+        }
+        #canvas {
+           display: none; /* Hidden canvas */
+        }
+          /* Footer */
+        .footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+            margin-top: auto; /* Push to bottom */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .page-title {
+                padding: 3rem 0;
+            }
+            .page-title h1 {
+                font-size: 2.5rem;
+            }
+            .upload-card{
+                padding: 1.5rem;
+            }
+        }
+      /* Style for the hidden file input */
+        #hiddenFileInput {
+          display: none;
+      }
+     /*  Style to make the preview container occupy space even when hidden */
+    .preview-container {
+        min-height: 100px; /* Adjust as needed.  Important! */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    </style>
+</head>
+
+<body class="upload-page">
+
+ <header class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a href="/" class="navbar-brand d-flex align-items-center">
+            <i class="bi bi-heart-pulse-fill me-2"></i>
+            Lesion Lens
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/upload" class="nav-link active">Upload</a>
+                </li>
+                 <li class="nav-item">
+                    <a href="/" class="nav-link">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+
+
+  <main class="main">
+
+    <div class="page-title" data-aos="fade" style="background-image: url(https://images.tv9hindi.com/wp-content/uploads/2024/01/colon-cancer.jpg);">
+      <div class="container position-relative">
+        <h1>Upload</h1>
+        <nav class="breadcrumbs">
+            <ol>
+                <li><a href="/">Home</a></li>  <!-- Simplified hrefs -->
+                <li><a href="/login">Login</a></li>
+                <li class="current">Upload</li>
+            </ol>
+        </nav>
+      </div>
+    </div>
+
+    <section class="upload-section section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-6 col-md-8">
+            <div class="upload-card animate__animated animate__fadeInUp" data-aos="fade-up" data-aos-delay="100">
+              <div class="upload-icon">
+                <i class="bi bi-cloud-arrow-up-fill"></i>
+              </div>
+              <h3>Upload or Capture Image</h3>
+
+              <form class="upload-form" action="/submit" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                  <label for="imageFile">Choose Image:</label>
+                   <!--  Use a label to trigger the file input. Make the input full-width. -->
+                  <label for="hiddenFileInput" class="btn btn-primary d-block">Choose File</label>
+                  <input class="form-control" name="my_image" id="hiddenFileInput" type="file" accept="image/*" onchange="previewImage(event)">
+                </div>
+
+                <div class="mb-3">
+                    <!--  Use type="button" to prevent accidental form submission -->
+                  <button class="btn btn-capture" type="button" onclick="startCamera()">
+                    <i class="bi bi-camera-fill me-2"></i>Capture with Camera
+                  </button>
+                </div>
+
+                <!--  Use a container for consistent preview sizing -->
+                <div class="preview-container">
+                    <video id="video" playsinline autoplay></video>
+                    <canvas id="canvas"></canvas>
+                    <img id="preview" src="#" alt="Preview">
+                </div>
+
+                <!-- Keep this button as type="submit" -->
+                <div class="mb-3">
+                    <button class="btn btn-submit" type="submit" id="submitBtn" disabled>Submit</button> <!-- Initially disabled -->
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+        <p>© 2025 Lesion Lens. All rights reserved.</p>
+    </div>
+</footer>
+
+
+    <!-- Bootstrap 5 JS Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <!-- AOS (Animate on Scroll) -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+        });
+
+        let videoStream;
+        let capturedImageData = null;
+
+        function previewImage(event) {
+           const imageFile = event.target.files[0];
+            if (imageFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('preview').src = e.target.result;
+                    document.getElementById('preview').style.display = 'block';
+                    document.getElementById('video').style.display = 'none';
+                    document.getElementById('submitBtn').disabled = false;
+                }
+                reader.readAsDataURL(imageFile);
+
+                const canvas = document.getElementById('canvas');
+                canvas.style.display = 'none';
+                capturedImageData = null;
+            }
+        }
+
+        async function startCamera() {
+            const video = document.getElementById('video');
+            const preview = document.getElementById('preview');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+            const submitBtn = document.getElementById('submitBtn');
+
+            try {
+                videoStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });
+                setupCameraStream(video, canvas, preview, context, submitBtn);
+            } catch (err) {
+                console.error("Error accessing environment camera:", err);
+                try {
+                    videoStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false});
+                    setupCameraStream(video, canvas, preview, context, submitBtn);
+                } catch (err2) {
+                    console.error("Error accessing user camera:", err2);
+                    alert("Could not access camera. Please ensure your camera is connected and permissions are granted.");
+                }
+            }
+        }
+
+      function setupCameraStream(video, canvas, preview, context, submitBtn){
+          video.style.display = 'block';
+          preview.style.display = 'none';
+          video.srcObject = videoStream;
+
+          video.onloadedmetadata = () => {
+              canvas.width = video.videoWidth;
+              canvas.height = video.videoHeight;
+          };
+
+          video.onclick = () => {
+              context.drawImage(video, 0, 0, canvas.width, canvas.height);
+              capturedImageData = canvas.toDataURL('image/png');
+              preview.src = capturedImageData;
+              preview.style.display = 'block';
+              video.style.display = 'none';
+              canvas.style.display = 'block'; // Show the canvas
+              submitBtn.disabled = false;
+              stopCamera();
+          };
+      }
+
+        function stopCamera() {
+            if (videoStream) {
+                videoStream.getTracks().forEach(track => track.stop());
+                videoStream = null;
+            }
+        }
+
+       function dataURLtoFile(dataURL, filename) {
+          let arr = dataURL.split(','),
+              mime = arr[0].match(/:(.*?);/)[1],
+              bstr = atob(arr[1]),
+              n = bstr.length,
+              u8arr = new Uint8Array(n);
+          while(n--){
+              u8arr[n] = bstr.charCodeAt(n);
+          }
+          return new File([u8arr], filename, {type:mime});
+      }
+
+
+        document.querySelector('.upload-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default always
+
+            if (capturedImageData) {
+                // Camera capture path
+                const capturedFile = dataURLtoFile(capturedImageData, 'captured_image.png');
+                const formData = new FormData();
+                formData.append('my_image', capturedFile);
+
+                //AJAX submission
+                submitFormData(formData);
+
+            } else if (document.getElementById('hiddenFileInput').files.length > 0) {
+                // File input path (standard form submission)
+                const formData = new FormData(this); // 'this' refers to the form
+                submitFormData(formData);
+
+            } else {
+                alert("Please select or capture an image to submit.");
+            }
+        });
+
+
+        function submitFormData(formData) {
+            fetch('/submit', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json(); // Always expect JSON
+            })
+            .then(data => {
+                console.log('Success:', data);
+                //  Check for the redirect flag in the JSON response
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                } else {
+                  // Handle other responses (maybe an error message?)
+                  alert(data.message || "Success, but no redirect specified.");
+              }
+
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("An error occurred during submission.");
+            });
+        }
+
+    </script>
+
+</body>
+
+</html>

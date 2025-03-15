@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesion Lens - AI-Powered Skin Cancer Detection</title>
+    <meta content="Advanced AI system for early detection of skin cancer" name="description">
+    <meta content="skin cancer detection, AI healthcare, dermatology, melanoma detection" name="keywords">
+
+    <!-- Favicons (Using online placeholders) -->
+    <link href="https://via.placeholder.com/50x50/000000/FFFFFF?text=Icon" rel="icon">
+    <link href="https://via.placeholder.com/150x150/000000/FFFFFF?text=Icon" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+     <!-- AOS (Animate on Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+       /*  Improved and Modern CSS */
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            background-color: #f8f9fa;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: #0d6efd;
+        }
+
+        .navbar-brand i {
+             color: #dc3545; /* Bootstrap danger color for the heart icon */
+        }
+
+        .nav-link {
+            color: #444;
+            font-weight: 500;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #0d6efd;
+        }
+
+        .btn-outline-primary {
+            border-width: 2px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #0d6efd;
+            color: #fff;
+            border-color: #0d6efd;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: #e9ecef;
+            padding: 4rem 0;
+            color: #212529;
+            text-align: center;
+            border-radius: 15px;
+            margin-top: 6rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        .hero-img-container{
+              border-radius: 15px;
+              overflow: hidden;
+        }
+
+        .btn-light {
+            background-color: #fff;
+            color: #0d6efd;
+            border: 2px solid #0d6efd;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-light:hover {
+            background-color: #0d6efd;
+            color: #fff;
+        }
+
+        /* Features Section */
+       .features {
+            padding: 4rem 0;
+            background-color: white; /* Separating the sections */
+        }
+
+        .feature-card {
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            background-color: #fff;
+            text-align: center; /* Center-align content */
+            margin-bottom: 1.5rem; /* Consistent spacing */
+
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px); /* Slight lift on hover */
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #0d6efd;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+         /* Cancer Types Section */
+        .cancer-types {
+            padding: 4rem 0;
+            background-color: #f8f9fa;
+        }
+         .cancer-types h2{
+              text-align: center;
+              margin-bottom: 2rem;
+              font-weight: bold;
+         }
+
+        .cancer-card {
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .cancer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .cancer-icon {
+            font-size: 1.5rem;
+            color: #0d6efd;
+            margin-bottom: 0.5rem;
+        }
+
+        .cancer-card h4 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .melanoma .cancer-icon {
+            color: #dc3545;
+        }
+         .cancer-card img {
+              border-radius: 10px;
+              max-width: 150px;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: 4rem 0;
+            background-color: white;
+        }
+        .how-it-works-img{
+              border-radius: 15px;
+              max-width: 100%;
+              height: auto;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #0d6efd;
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            line-height: 50px;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+          flex-grow: 1;
+        }
+        .step-content h4{
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+    </style>
+</head>
+
+<body class="index-page">
+
+  <!-- Navbar -->
+    <header class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a href="/" class="navbar-brand d-flex align-items-center">
+                <i class="bi bi-heart-pulse-fill me-2"></i>
+                Lesion Lens
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link active">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/login" class="btn btn-outline-primary ms-lg-3">Get Started</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-7">
+                  <h1 class="display-4 fw-bold">Early Skin Cancer Detection with AI</h1>
+                  <p class="lead">
+                      Get a fast, accurate analysis of skin lesions using our advanced AI-powered platform.
+                  </p>
+                  <a href="/login" class="btn btn-light btn-lg">Try It Now</a>
+                </div>
+                <div class="col-md-5 hero-img-container">
+                    <!--  Real Image (Online) -->
+                    <img src="https://www.skincancer.org/wp-content/uploads/what-is-melanoma-mole-check.jpg" alt="Skin lesion analysis with dermatoscope" class="img-fluid rounded-3 shadow">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="feature-icon">
+                            <i class="bi bi-lightning-charge-fill"></i>
+                        </div>
+                        <h3 class="h4">Fast & Accurate</h3>
+                        <p>Get results in seconds with high accuracy, powered by cutting-edge AI.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="feature-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <h3 class="h4">Secure & Private</h3>
+                        <p>Your data is encrypted and kept confidential.  We prioritize your privacy.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card"  data-aos="fade-up" data-aos-delay="300">
+                        <div class="feature-icon">
+                            <i class="bi bi-person-check"></i>
+                        </div>
+                        <h3 class="h4">Easy to Use</h3>
+                        <p>Simple, intuitive interface.  No technical expertise required.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <!-- Cancer Types Section -->
+    <section class="cancer-types">
+        <div class="container">
+            <h2>Common Types of Skin Cancer</h2>
+            <div class="row">
+                <!-- Basal Cell Carcinoma -->
+                <div class="col-md-4">
+                    <div class="cancer-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="cancer-icon">
+                            <i class="bi bi-circle-fill"></i>
+                        </div>
+                        <!-- Real Image (Online) -->
+                        <img src="https://www.cancer.org/content/dam/photogallery/images/cancer-types/basal-cell-carcinoma-skin-cancer.jpg" alt="Example of Basal Cell Carcinoma" class="img-fluid mb-3" style="max-width: 150px;">
+                        <h4>Basal Cell Carcinoma</h4>
+                        <p>The most common type, often looks like a flesh-colored bump or a pinkish patch of skin.</p>
+                    </div>
+                </div>
+
+                <!-- Squamous Cell Carcinoma -->
+                <div class="col-md-4">
+                    <div class="cancer-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="cancer-icon">
+                            <i class="bi bi-square-fill"></i>
+                        </div>
+                        <!--  Real Image (Online) -->
+                        <img src="https://www.verywellhealth.com/thmb/u-u3suHahe7rgEWIjT858S_k_xI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/squamous-cell-carcinoma-on-nose-514115-5bcfd99dc9e77c00268ab59f.png" alt="Example of Squamous Cell Carcinoma" class="img-fluid mb-3" style="max-width: 150px;">
+                        <h4>Squamous Cell Carcinoma</h4>
+                        <p>Often appears as a firm, red nodule, a flat lesion with a scaly crust, or a sore that doesn't heal.</p>
+                    </div>
+                </div>
+
+                <!-- Melanoma -->
+                <div class="col-md-4">
+                    <div class="cancer-card melanoma" data-aos="fade-up" data-aos-delay="300">
+                        <div class="cancer-icon">
+                            <i class="bi bi-exclamation-triangle-fill"></i>
+                        </div>
+                        <!-- Real Image (Online) -->
+                        <img src="https://www.skincancer.org/wp-content/uploads/melanoma-1.jpg" alt="Example of Melanoma" class="img-fluid mb-3" style="max-width: 150px;">
+
+                        <h4>Melanoma</h4>
+                        <p>The most serious type. Often develops in a mole or appears as a new, unusual-looking growth.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+          <h2 class="text-center mb-5">How It Works</h2>
+            <div class="row align-items-center">
+                <div class="col-md-6" data-aos="fade-right">
+                     <!-- Real Image (Online)-->
+                    <img src="https://www.technologynetworks.com/sites/technologynetworks/files/styles/large/public/images/body/iStock-1168369171_1.jpg" alt="How Lesion Lens works" class="how-it-works-img">
+                </div>
+                 <div class="col-md-6">
+                    <div class="step" data-aos="fade-left" data-aos-delay="100">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Upload a Photo</h4>
+                            <p>Take a clear photo of the skin lesion you're concerned about.</p>
+                        </div>
+                    </div>
+                    <div class="step" data-aos="fade-left" data-aos-delay="200">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>AI Analysis</h4>
+                            <p>Our advanced AI model analyzes the image for potential signs of skin cancer.</p>
+                        </div>
+                    </div>
+                    <div class="step" data-aos="fade-left" data-aos-delay="300">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Get Results</h4>
+                            <p>Receive a risk assessment and recommendations within seconds.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 Lesion Lens. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <!-- AOS (Animate on Scroll) -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+        });
+    </script>
+</body>
+</html>

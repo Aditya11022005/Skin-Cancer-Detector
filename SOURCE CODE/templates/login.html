@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesion Lens - Login</title>
+    <link href="https://via.placeholder.com/50x50/000000/FFFFFF?text=Icon" rel="icon">
+    <link href="https://via.placeholder.com/150x150/000000/FFFFFF?text=Icon" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <!-- AOS (Animate on Scroll) -  Keep, but we'll use Animate.css more -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            background-color: #f8f9fa;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Full viewport height */
+        }
+
+       .navbar {
+            background-color: #fff; /* Clean white navbar */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Subtle shadow */
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.5rem;  /* Larger brand name */
+            color: #0d6efd; /* Bootstrap primary color */
+        }
+
+        .navbar-brand i {
+             color: #dc3545; /* Bootstrap danger color for the heart icon */
+        }
+
+        .nav-link {
+            color: #444;
+            font-weight: 500;
+            transition: color 0.2s ease-in-out; /* Smooth hover effect */
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #0d6efd;
+        }
+
+        .login-section {
+            flex-grow: 1; /* Fill available space */
+            display: flex;
+            align-items: center; /* Vertical centering */
+            padding: 4rem 0; /* Increased padding */
+        }
+
+        .login-card {
+            border-radius: 20px; /* More rounded corners */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+            overflow: hidden;
+            background-color: #fff;
+            max-width: 900px; /* Limit maximum width */
+            margin: 0 auto;   /* Center horizontally */
+            transition: transform 0.3s ease;
+        }
+        .login-card:hover{
+            transform: scale(1.02);
+        }
+
+        .login-img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+            border-radius: 20px 0 0 20px; /* Rounded corners only on left */
+        }
+
+
+       .login-form label {
+            font-weight: 600;  /* Bolder labels */
+            margin-bottom: 0.5rem;
+            display: block;
+            color: #495057; /* Slightly darker label color */
+        }
+
+        .login-form .form-control {
+            border-radius: 10px; /* Rounded inputs */
+            padding: 0.8rem 1.2rem; /* More padding */
+            border: 2px solid #ced4da; /* Thicker border */
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .login-form .form-control:focus {
+            border-color: #0d6efd; /* Bootstrap primary color on focus */
+            outline: 0;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        /* Invalid input styling */
+        .login-form .form-control.is-invalid {
+            border-color: #dc3545; /* Red border for invalid */
+        }
+
+        .login-form .form-control.is-invalid:focus {
+            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25); /* Red shadow */
+        }
+
+        .login-form .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            border-radius: 10px; /* Rounded button */
+            padding: 0.8rem 1.5rem;
+            font-weight: 600;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+        }
+
+        .login-form .btn-primary:hover {
+            background-color: #0b5ed7;
+            border-color: #0a58ca;
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+
+
+
+        /* Footer */
+        .footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+            margin-top: auto; /* Push to bottom */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a href="/" class="navbar-brand d-flex align-items-center">  <!-- Use / for simplicity -->
+                <i class="bi bi-heart-pulse-fill me-2"></i>
+                Lesion Lens
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link">Home</a> <!-- Use / for simplicity -->
+                    </li>
+                    <li class="nav-item">
+                        <a href="/login" class="nav-link active">Login</a>  <!-- Use /login for simplicity -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Section -->
+     <section class="login-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <!--  Wrap in another div for AOS -->
+                    <div data-aos="fade-up" data-aos-delay="100">
+                        <div class="login-card animate__animated animate__fadeInUp">  <!-- Add Animate.css classes -->
+                            <div class="row g-0">
+                                <!-- Image Column -->
+                                <div class="col-md-6 d-flex align-items-center">
+                                    <img src="https://img.freepik.com/free-vector/sign-concept-illustration_114360-5267.jpg" alt="Login Image" class="login-img animate__animated animate__fadeInLeft">  <!-- Add animation -->
+                                </div>
+                                <!-- Form Column -->
+                                <div class="col-md-6">
+                                    <div class="p-5">  <!-- Increased padding -->
+                                        <h2 class="text-center mb-4 animate__animated animate__fadeInDown">Login to Lesion Lens</h2> <!-- Add animation -->
+                                        <form class="login-form" method="POST" onsubmit="return login()">
+                                            <div class="mb-4">  <!-- Increased spacing -->
+                                                <label for="uname">Username:</label>
+                                                <input type="text" id="uname" name="username" class="form-control" placeholder="Enter username" required>
+                                            </div>
+
+                                            <div class="mb-4"> <!-- Increased spacing -->
+                                                <label for="pwd">Password:</label>
+                                                <input type="password" id="pwd" name="password" class="form-control" placeholder="Enter password" required>
+                                                 <!--  Added visual feedback for password input -->
+                                                <div class="invalid-feedback">
+                                                    Please enter a valid password.
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Login</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 Lesion Lens. All rights reserved.</p>
+        </div>
+    </footer>
+
+   <!-- Bootstrap 5 JS Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <!-- AOS (Animate on Scroll) -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+             delay: 200, // Add a slight delay
+        });
+
+      function login() {
+            var uname = document.getElementById("uname").value;
+            var pwd = document.getElementById("pwd").value;
+            var pwdInput = document.getElementById("pwd"); // Get password input
+
+            if (uname === "admin" && pwd === "admin") {
+                alert("Login Success!");
+                pwdInput.classList.remove("is-invalid"); // Remove if present
+                window.location.href = "/index"; // Redirect.  Use /index
+                return false;
+            } else {
+                alert("Invalid Credentials!");
+                pwdInput.classList.add("is-invalid");  // Add Bootstrap's class
+                return false;
+            }
+        }
+
+        //  Added animation for form elements on focus
+        document.querySelectorAll('.form-control').forEach(item => {
+          item.addEventListener('focus', event => {
+            item.closest('.mb-4').classList.add('animate__animated', 'animate__pulse'); // Use mb-4
+          });
+          item.addEventListener('blur', event => {
+              item.closest('.mb-4').classList.remove('animate__animated', 'animate__pulse'); //Use mb-4
+          })
+        });
+
+    </script>
+</body>
+</html>
